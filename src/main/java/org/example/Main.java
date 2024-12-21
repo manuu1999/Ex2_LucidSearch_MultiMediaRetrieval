@@ -26,33 +26,9 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    System.out.println("\nSearch by:");
-                    System.out.println("1. Title");
-                    System.out.println("2. Year");
-                    System.out.println("3. Genre");
-                    System.out.print("Choose a search field: ");
-                    int fieldChoice = scanner.nextInt();
-                    scanner.nextLine(); // Consume the newline
-
-                    String field;
-                    switch (fieldChoice) {
-                        case 1:
-                            field = "title";
-                            break;
-                        case 2:
-                            field = "year";
-                            break;
-                        case 3:
-                            field = "genre";
-                            break;
-                        default:
-                            System.out.println("Invalid field choice. Returning to menu.");
-                            continue;
-                    }
-
-                    System.out.print("Enter search query: ");
+                    System.out.print("Enter search query (keywords, title, genre, etc.): ");
                     String query = scanner.nextLine();
-                    searcher.search(field, query);
+                    searcher.search(query); // Directly pass the query to the searcher
                     break;
 
                 case 2:
