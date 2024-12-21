@@ -21,23 +21,22 @@ public class Main {
             System.out.println("2. Exit");
             System.out.print("Choose an option: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline
+            String choice = scanner.nextLine().trim();
 
             switch (choice) {
-                case 1:
-                    System.out.print("Enter search query (keywords, title, genre, etc.): ");
-                    String query = scanner.nextLine();
-                    searcher.search(query); // Directly pass the query to the searcher
+                case "1":
+                    System.out.print("Enter search query (title, genre, year, or rating): ");
+                    String query = scanner.nextLine().trim();
+                    searcher.search(query);
                     break;
 
-                case 2:
+                case "2":
                     System.out.println("Exiting the program. Goodbye!");
                     running = false;
                     break;
 
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    System.out.println("Could not recognize your instruction, please try again.");
             }
         }
 

@@ -1,7 +1,9 @@
 package org.example;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.*;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
@@ -18,7 +20,7 @@ public class Indexer {
 
     public void createIndex(String csvFilePath) {
         try {
-            // Clear the index directory
+            // Clear the index directory to avoid conflicts
             Path path = Paths.get(INDEX_DIR);
             if (Files.exists(path)) {
                 for (var file : Objects.requireNonNull(path.toFile().listFiles())) {
@@ -41,11 +43,10 @@ public class Indexer {
                     doc.add(new TextField("title", fields[1].trim(), Field.Store.YES));
                     doc.add(new TextField("year", fields[2].trim(), Field.Store.YES));
                     doc.add(new TextField("genre", fields[5].trim(), Field.Store.YES));
+                    doc.add(new TextField("rating", fields[6].trim(), Field.Store.YES)); // Add rating
                     doc.add(new TextField("overview", fields[7].trim(), Field.Store.YES));
-                    doc.add(new FloatPoint("rating", Float.parseFloat(fields[6].trim())));
-                    doc.add(new StoredField("rating_display", fields[6].trim())); // For display
-
                     writer.addDocument(doc);
+
                     System.out.println("Indexed: " + fields[1].trim());
                 }
             }
