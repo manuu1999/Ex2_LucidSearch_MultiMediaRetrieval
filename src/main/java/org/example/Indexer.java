@@ -20,7 +20,6 @@ public class Indexer {
 
     public void createIndex(String csvFilePath) {
         try {
-            // Clear the index directory to avoid conflicts
             Path path = Paths.get(INDEX_DIR);
             if (Files.exists(path)) {
                 for (var file : Objects.requireNonNull(path.toFile().listFiles())) {
@@ -38,16 +37,14 @@ public class Indexer {
 
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-                if (fields.length > 8) { // Ensure sufficient fields exist
+                if (fields.length > 7) {
                     Document doc = new Document();
                     doc.add(new TextField("title", fields[1].trim(), Field.Store.YES));
                     doc.add(new TextField("year", fields[2].trim(), Field.Store.YES));
                     doc.add(new TextField("genre", fields[5].trim(), Field.Store.YES));
-                    doc.add(new TextField("rating", fields[6].trim(), Field.Store.YES)); // Add rating
+                    doc.add(new TextField("rating", fields[6].trim(), Field.Store.YES));
                     doc.add(new TextField("overview", fields[7].trim(), Field.Store.YES));
                     writer.addDocument(doc);
-
-                    System.out.println("Indexed: " + fields[1].trim());
                 }
             }
 

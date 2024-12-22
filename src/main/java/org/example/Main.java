@@ -1,5 +1,9 @@
 package org.example;
 
+import org.apache.lucene.document.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -15,28 +19,44 @@ public class Main {
 
         boolean running = true;
 
+        List<Document> currentResults = new ArrayList<>(); // To store results for narrowing down
+
         while (running) {
             System.out.println("\nMenu:");
             System.out.println("1. Search for movies");
-            System.out.println("2. Exit");
+            if (!currentResults.isEmpty()) {
+                System.out.println("2. Narrow down the result with additional filters");
+            }
+            System.out.println("3. Exit");
             System.out.print("Choose an option: ");
 
-            String choice = scanner.nextLine().trim();
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
 
             switch (choice) {
-                case "1":
-                    System.out.print("Enter search query (title, genre, year, or rating): ");
-                    String query = scanner.nextLine().trim();
-                    searcher.search(query);
+                case 1: // Search for movies
+                    System.out.print("Enter search query: ");
+                    String query = scanner.nextLine();
+                    currentResults = searcher.search(query); // Perform initial search
                     break;
 
-                case "2":
+                case 2: // Narrow down results
+                    if (currentResults.isEmpty()) {
+                        System.out.println("No results to filter. Perform a new search first.");
+                    } else {
+                        System.out.print("Enter filter term to narrow down results: ");
+                        String filter = scanner.nextLine();
+                        currentResults = searcher.filterResults(currentResults, filter); // Narrow down results
+                    }
+                    break;
+
+                case 3: // Exit
                     System.out.println("Exiting the program. Goodbye!");
                     running = false;
                     break;
 
-                default:
-                    System.out.println("Could not recognize your instruction, please try again.");
+                default: // Invalid input
+                    System.out.println("Invalid option. Please try again.");
             }
         }
 
