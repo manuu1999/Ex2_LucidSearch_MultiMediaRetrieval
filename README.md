@@ -15,14 +15,14 @@ Spell-Checking: Suggest corrections for misspelled inputs.
 Faceted Search: Filter results by genre, year, or rating.
 Pagination: Display results in pages for better navigation.
 
-##How to Run
+#How to Run
 Clone the repository to your local machine
 Open the project in IntelliJ IDEA or another IDE of your choice.
 Install required Lucene dependencies via Maven.
 Place the movie dataset (imdb_top_1000.csv) in the src/resources directory.
 Run the Main.java file to start the interactive search system.
 
-##Requirements
+##equirements
 Java 19
 Maven for dependency management
 IntelliJ IDEA or any Java IDE
