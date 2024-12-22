@@ -30,35 +30,40 @@ public class Main {
                     String query = scanner.nextLine();
                     searcher.searchWithSpellCheck(query);
 
-                    boolean filtering = true;
-                    while (filtering) {
+                    boolean navigating = true;
+                    while (navigating) {
                         System.out.println("\nOptions:");
-                        System.out.println("1. Narrow down the result with additional filters");
-                        System.out.println("2. Search for other movies");
-                        System.out.println("3. Exit");
+                        System.out.println("1. Next page");
+                        System.out.println("2. Previous page");
+                        System.out.println("3. Narrow down the result with additional filters");
+                        System.out.println("4. New search");
+                        System.out.println("5. Exit");
                         System.out.print("Choose an option: ");
 
-                        int filterChoice = scanner.nextInt();
+                        int navChoice = scanner.nextInt();
                         scanner.nextLine();
 
-                        switch (filterChoice) {
+                        switch (navChoice) {
                             case 1:
+                                searcher.paginate("next");
+                                break;
+                            case 2:
+                                searcher.paginate("prev");
+                                break;
+                            case 3:
                                 System.out.print("Enter filter field (title, genre, year, rating): ");
                                 String field = scanner.nextLine();
                                 System.out.print("Enter filter value: ");
                                 String value = scanner.nextLine();
                                 searcher.filterResults(field, value);
                                 break;
-
-                            case 2:
-                                filtering = false;
+                            case 4:
+                                navigating = false;
                                 break;
-
-                            case 3:
-                                filtering = false;
+                            case 5:
+                                navigating = false;
                                 running = false;
                                 break;
-
                             default:
                                 System.out.println("Invalid option. Please try again.");
                         }
